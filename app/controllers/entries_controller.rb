@@ -1,31 +1,60 @@
 class EntriesController < ApplicationController
+  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+
   def index
-    @entries = Entry.all
+    @entries = Entry.all.order('created_at DESC')
   end
 
   def show
-    @entry = Entry.find(params[:id])
   end
 
   def new
     @entry = Entry.new
-    @entry.title.build
-    @entry.body.build
-    @entry.category_id.build
+  end
+
+  def edit
   end
 
   def create
     @entry = Entry.new(entry_params)
 
-    if @entry.save
-      redirect_to @entry, notice: 'Entry was successfully created.'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @entry.save
+        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @example }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @entry.update(entry_params)
+        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @entry.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @entry.destroy
+    respond_to do |format|
+      format.html { redirect_to entries_url }
+      format.json { head :no_content }
     end
   end
 
   private
+  def set_entry
+    @entry = Entry.find(params[:id])
+  end
+
   def entry_params
-    params.require(:entries).permit(:title, :body, :category_id)
+    params.require(:entry).permit(:title, :body, :category_id)
   end
 end

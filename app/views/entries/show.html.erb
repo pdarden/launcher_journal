@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @entry.title %>
+</h1>
+
+<p>
+  <%= @entry.body %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @entry.category_name %>
+</p>
+
+<%= link_to 'Edit', edit_entry_path(@entry), class: "btn btn-info" %>
+<%= link_to 'Back', entries_path, class: "btn btn-info" %>

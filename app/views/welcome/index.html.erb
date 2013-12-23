@@ -1,0 +1,12 @@
+<% @entries.each do |entry| %>
+  <div class="container">
+    <h2><%= entry.title %><br></h2>
+    <blockquote>
+      <%= entry.body %><br>
+    </blockquote>
+     <strong>Category: </strong><small><%= entry.category_name %></small><br>
+    <%= link_to 'Show', entry, class: "btn btn-info" %>
+    <%= link_to 'Edit', edit_entry_path(entry), class: "btn btn-info" %>
+    <%= link_to 'Delete', entry, class: "btn btn-info", method: :delete, data: { confirm: 'Are you sure?' } %>
+  </div><br>
+<% end %>

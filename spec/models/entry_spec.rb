@@ -12,5 +12,6 @@ describe Entry do
   it { should have_valid(:category_id).when(3) }
   it { should_not have_valid(:category_id).when('an id') }
 
+  it { should belong_to(:category) }
 
 end
